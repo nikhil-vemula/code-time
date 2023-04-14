@@ -18,9 +18,23 @@ export default {
         </v-col>
 
         <v-col>
-          <v-sheet min-height="70vh" rounded="lg">
-            <h1>Revise</h1>
-          </v-sheet>
+            <v-sheet min-height="70vh" rounded="lg" class="pa-md-4">
+              <h1>Revise</h1>
+              <v-table fixed-header height="40vh">
+                <thead>
+                  <tr>
+                    <th class="text-left">Question</th>
+                    <th class="text-left">Link</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in 100" :key="item.title">
+                    <td>Question {{ item }}</td>
+                    <td>Question {{ item }} link</td>
+                  </tr>
+                </tbody>
+              </v-table>
+            </v-sheet>
         </v-col>
       </v-row>
     </v-container>

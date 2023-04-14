@@ -28,18 +28,16 @@ export default {
         </v-col>
 
         <v-col>
-          <v-sheet min-height="80vh" rounded="lg">
+          <v-sheet min-height="80vh" rounded="lg" class="pa-md-4">
             <v-table fixed-header height="80vh">
               <thead>
                 <tr>
                   <th class="text-left">Question</th>
-                  <th class="text-left">Link</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="item in 100" :key="item.title">
-                  <td>Question {{ item }}</td>
-                  <td>Question {{ item }} link</td>
+                  <td><router-link :to="'/question/' + item">Question {{ item }}</router-link></td>
                 </tr>
               </tbody>
             </v-table>

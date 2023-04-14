@@ -4,6 +4,7 @@ import Signup from "@/views/Signup.vue";
 import Signin from "@/views/Signin.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import AllQuestions from "@/views/AllQuestions.vue";
+import Question from "@/views/Question.vue";
 
 const routes = [
   {
@@ -37,6 +38,14 @@ const routes = [
     path: "/allquestions",
     name: "AllQuestions",
     component: AllQuestions,
+    meta: {
+      authRequired: true
+    }
+  },
+  {
+    path: "/question/:id",
+    name: "Question",
+    component: Question,
     meta: {
       authRequired: true
     }
