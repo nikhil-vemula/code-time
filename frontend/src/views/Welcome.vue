@@ -14,7 +14,7 @@ export default {
         <h2 class="text-black text-h5 my-2">
           Site to track you coding practice
         </h2>
-        <v-btn flat to="/signin">Sign in</v-btn>
+        <v-btn color='primary' flat to="/signin">Sign in</v-btn>
       </div>
     </v-container>
   </v-main>

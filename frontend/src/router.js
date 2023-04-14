@@ -5,6 +5,7 @@ import Signin from "@/views/Signin.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import AllQuestions from "@/views/AllQuestions.vue";
 import Question from "@/views/Question.vue";
+import store from '@/store.js';
 
 const routes = [
   {
@@ -58,7 +59,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let signedIn = true
+  let signedIn = store.state.isLoggedIn
 
   if (to.path == '/') {
     if (signedIn) {
