@@ -1,17 +1,14 @@
 <script>
+import AppNavigation from './components/AppNavigation.vue'
+
 export default {
-  data() {
-    return {
-      message: 'Hello world!'
-    }
-  }
+  components: { AppNavigation }
 }
 </script>
 
 <template>
   <v-app id="app">
-        <v-content transition="slide-x-transition">
-            <router-view></router-view>
-        </v-content>
-    </v-app>
+    <app-navigation></app-navigation>
+    <router-view></router-view>
+  </v-app>
 </template>

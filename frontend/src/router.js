@@ -1,16 +1,19 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "@/views/Home.vue";
+import Welcome from "@/views/Welcome.vue";
 import Signup from "@/views/Signup.vue";
 import Signin from "@/views/Signin.vue";
+import Dashboard from "@/views/Dashboard.vue";
+import AllQuestions from "@/views/AllQuestions.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
-    meta: {
-      authRequired: true
-    }
+    component: Welcome
+  },
+  {
+    path: "/welcome",
+    name: "Welcome",
+    component: Welcome
   },
   {
     path: "/signup",
@@ -19,8 +22,24 @@ const routes = [
   },
   {
     path: "/signin",
-    name: "signin",
+    name: "Signin",
     component: Signin,
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    meta: {
+      authRequired: true
+    }
+  },
+  {
+    path: "/allquestions",
+    name: "AllQuestions",
+    component: AllQuestions,
+    meta: {
+      authRequired: true
+    }
   }
 ];
 
@@ -30,8 +49,22 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  let signedIn = true
+
+  if (to.path == '/') {
+    if (signedIn) {
+      next('/dashboard')
+    } else {
+      next('/welcome')
+    }
+  }
+
   if (to.matched.some(record => record.meta.authRequired)) {
-      next({path: '/signin'});
+    if (!signedIn) {
+      next({path: '/'});
+    } else {
+      next();
+    }
   } else {
       next();
   }

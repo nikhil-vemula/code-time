@@ -5,5 +5,7 @@ export default {
 </script>
 
 <template>
-  <h1>Sign up</h1>
+  <v-main class="bg-grey-lighten-3">
+    <h1>Sign up</h1>
+  </v-main>
 </template>
