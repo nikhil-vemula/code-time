@@ -18,6 +18,7 @@ export default {
           size="32"
         ></v-avatar>
 
+        <span class="font-weight-bold">Coding Made Easy</span>
         <v-spacer></v-spacer>
 
         <v-btn
