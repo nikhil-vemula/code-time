@@ -9,9 +9,9 @@ export default {
 </script>
 
 <template>
-  <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/signup">Signup</router-link>
-  </div>
-  <router-view />
+  <v-app id="app">
+        <v-content transition="slide-x-transition">
+            <router-view></router-view>
+        </v-content>
+    </v-app>
 </template>
