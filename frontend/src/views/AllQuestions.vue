@@ -4,17 +4,13 @@ import SideNavigation from "../components/SideNavigation.vue";
 export default {
   components: { SideNavigation },
   name: "AllQuestions",
-  data() {
-    return {
-      questions: [
-        { id: 1, title: "Question 1", link: "/question/1" },
-        { id: 2, title: "Question 2", link: "/question/2" },
-        { id: 3, title: "Question 3", link: "/question/3" },
-        { id: 4, title: "Question 4", link: "/question/4" },
-        { id: 5, title: "Question 5", link: "/question/5" },
-        { id: 5, title: "Question 5", link: "/question/5" },
-      ],
-    };
+  mounted() {
+    this.$store.dispatch("getQuestionsForUser");
+  },
+  computed: {
+    questions() {
+      return this.$store.getters.getQuestions;
+    },
   },
 };
 </script>
@@ -32,19 +28,39 @@ export default {
             <v-container>
               <v-row>
                 <v-col><h1>All questions</h1></v-col>
-                <v-col><v-btn class="ma-2 float-right">Add</v-btn></v-col>
+                <v-col><router-link to="/new-question"><v-btn class="ma-2 float-right" >Add</v-btn></router-link></v-col>
               </v-row>
             </v-container>
             <v-table fixed-header height="80vh">
               <thead>
                 <tr>
                   <th class="text-left">Question</th>
+                  <th class="text-left">URL</th>
+                  <th class="text-left">Difficulty</th>
+                  <th class="text-left">Tags</th>
                   <th class="text-left">Last solved</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in 100" :key="item.title">
-                  <td><router-link :to="'/question/' + item">Question {{ item }}</router-link></td>
+                <tr v-for="item in questions" :key="item.title">
+                  <td>
+                    <router-link :to="'/question/' + item.question_id">{{
+                      item.title
+                    }}</router-link>
+                  </td>
+                  <td>
+                    <a :href="item.url">{{ item.url }}</a>
+                  </td>
+                  <td>{{ item.difficulty_level }}</td>
+                  <td>
+                    <v-chip
+                      v-for="tag in item.tags.split(',')"
+                      :key="tag"
+                      class="mx-1"
+                      label
+                      size="x-small"
+                      >{{ tag }}</v-chip>
+                  </td>
                   <td>1 day ago</td>
                 </tr>
               </tbody>

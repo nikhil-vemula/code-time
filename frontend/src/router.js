@@ -5,17 +5,18 @@ import Signin from "@/views/Signin.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import AllQuestions from "@/views/AllQuestions.vue";
 import Question from "@/views/Question.vue";
-import store from '@/store.js';
+import NewQuestion from "@/views/NewQuestion.vue";
+import store from "@/store.js";
 
 const routes = [
   {
     path: "/",
-    component: Welcome
+    component: Welcome,
   },
   {
     path: "/welcome",
     name: "Welcome",
-    component: Welcome
+    component: Welcome,
   },
   {
     path: "/signup",
@@ -32,25 +33,33 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     meta: {
-      authRequired: true
-    }
+      authRequired: true,
+    },
   },
   {
     path: "/allquestions",
     name: "AllQuestions",
     component: AllQuestions,
     meta: {
-      authRequired: true
-    }
+      authRequired: true,
+    },
   },
   {
     path: "/question/:id",
     name: "Question",
     component: Question,
     meta: {
-      authRequired: true
-    }
-  }
+      authRequired: true,
+    },
+  },
+  {
+    path: "/new-question",
+    name: "NewQuestion",
+    component: NewQuestion,
+    meta: {
+      authRequired: true,
+    },
+  },
 ];
 
 const router = createRouter({
@@ -59,24 +68,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let signedIn = store.state.isLoggedIn
+  let signedIn = store.state.isLoggedIn;
 
-  if (to.path == '/') {
-    if (signedIn) {
-      next('/dashboard')
-    } else {
-      next('/welcome')
-    }
-  }
-
-  if (to.matched.some(record => record.meta.authRequired)) {
-    if (!signedIn) {
-      next({path: '/'});
-    } else {
-      next();
-    }
+  if (to.path == "/" && signedIn) {
+    next("/dashboard");
+  } else if (to.path == "/" && !signedIn) {
+    next("/welcome");
+  } else if (
+    to.matched.some((record) => record.meta.authRequired) &&
+    !signedIn
+  ) {
+    next({ path: "/" });
   } else {
-      next();
+    next();
   }
 });
 

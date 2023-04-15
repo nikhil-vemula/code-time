@@ -7,29 +7,31 @@ export default {
   data() {
     return {
       isFormValid: false,
-      isReadOnly: true,
-      rules: [],
+      question: {
+        title: "",
+        url: "",
+        short_desc: "",
+        description: "",
+        difficulty_level: "",
+        tags: "",
+        notes: "",
+      },
+      rules: [
+        (value) => {
+          if (value) return true;
+          return "Field can not be empty.";
+        },
+      ],
     };
   },
-  mounted() {
-    this.$store.dispatch("getQuestion", this.$route.params.id);
-  },
-  computed: {
-    question() {
-      return this.$store.getters.getQuestion;
-    },
-  },
   methods: {
-    edit() {
-      this.isReadOnly = false;
-    },
     save() {
-      this.isReadOnly = true;
       this.$refs.form.validate();
 
-      if (!this.isFormValid) return;
+      if (!this.isFormValid) 
+        return;
 
-      this.$store.dispatch("saveQuestion", {
+      this.$store.dispatch('saveQuestion', {
         title: this.question.title,
         url: this.question.url,
         short_desc: this.question.short_desc,
@@ -37,8 +39,7 @@ export default {
         difficulty_level: this.question.difficulty_level,
         tags: this.question.tags,
         notes: this.question.notes,
-        question_id: this.question.question_id,
-      });
+      })
     },
   },
 };
@@ -54,27 +55,8 @@ export default {
 
         <v-col>
           <v-sheet min-height="80vh" rounded="lg" class="pa-md-4">
-            <v-container>
-              <v-row>
-                <v-col><h1>Question</h1></v-col>
-                <v-col>
-                  <v-card-actions class="float-right">
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      @click="edit"
-                      v-if="isReadOnly"
-                      color="deep-purple-accent-4"
-                      >Edit</v-btn
-                    >
-                    <v-btn @click="save" v-else color="deep-purple-accent-4"
-                      >save</v-btn
-                    >
-                  </v-card-actions>
-                </v-col>
-              </v-row>
-            </v-container>
-
-            <v-form ref="form" v-model="isFormValid" :readonly="isReadOnly">
+            <h1 class="mb-4">New Question</h1>
+            <v-form ref="form" v-model="isFormValid">
               <v-container>
                 <v-row>
                   <v-col cols="12" lg="6">
@@ -143,6 +125,10 @@ export default {
               </v-container>
             </v-form>
             <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn @click="save" color="deep-purple-accent-4"> Save</v-btn>
+            </v-card-actions>
           </v-sheet>
         </v-col>
       </v-row>

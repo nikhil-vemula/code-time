@@ -29,10 +29,16 @@ export default {
   },
   methods: {
     async submit(event) {
+      this.$store.commit("setLoginFailed", false);
       this.$store.dispatch("userLogin", {
         email: this.email,
         password: this.password,
       });
+    },
+  },
+  computed: {
+    isLoginFailed() {
+      return this.$store.getters.isLoginFailed;
     },
   },
 };
@@ -42,6 +48,13 @@ export default {
   <v-main class="bg-grey-lighten-3">
     <div class="d-flex align-center justify-center" style="height: 50vh">
       <v-sheet width="400" class="mx-auto pa-4" rounded="lg">
+        <v-alert
+          v-model="isLoginFailed"
+          class="my-2"
+          color="error"
+          text="Incorrect user or password"
+          variant="tonal"
+        ></v-alert>
         <v-form @submit.prevent="submit" v-model="isFormValid">
           <v-text-field
             v-model="email"
@@ -52,9 +65,9 @@ export default {
             v-model="password"
             :rules="passwordRules"
             label="Password"
+            type="password"
           ></v-text-field>
           <v-btn
-            :disabled="!isFormValid"
             type="submit"
             color="primary"
             block
