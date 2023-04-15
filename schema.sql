@@ -79,15 +79,27 @@ CREATE TABLE similar_question(
 
 -- Functions
 
--- get_problems_solved
--- Contributed by: Nikhil 
-
-CREATE OR REPLACE FUNCTION get_problems_solved(userId INT)
+CREATE OR REPLACE FUNCTION get_problems_count(userId INT)
 RETURNS INT as $prob_count$
 DECLARE
   prob_count INT;
 BEGIN
-  SELECT count(*) INTO prob_count FROM questions WHERE user_id=userId;
+  SELECT count(question_id) INTO prob_count FROM questions q WHERE user_id=userId;
+  RETURN prob_count;
+END;
+$prob_count$ LANGUAGE plpgsql;
+
+-- get_problems_solved
+-- Contributed by: Nikhil 
+
+CREATE OR REPLACE FUNCTION get_solved_problems_count(userId INT)
+RETURNS INT as $prob_count$
+DECLARE
+  prob_count INT;
+BEGIN
+  SELECT count(*) INTO prob_count FROM questions q WHERE user_id=userId AND true=some(
+    SELECT true from last_revised WHERE question_id = q.question_id and solved=TRUE
+  );
   RETURN prob_count;
 END;
 $prob_count$ LANGUAGE plpgsql;
@@ -98,12 +110,13 @@ $prob_count$ LANGUAGE plpgsql;
 -- Contributed by: Sohail
 
 CREATE OR REPLACE FUNCTION get_revise_questions(userId INT)
-RETURNS TABLE (question_id INT, last_revised TIMESTAMP)
+RETURNS TABLE (question_id INT, title TEXT, url TEXT, short_desc TEXT, 
+description TEXT, difficulty_level TEXT, tags TEXT, notes TEXT, user_id INT, revised_time TIMESTAMP)
 AS $$
   SELECT * from (
-    SELECT question_id, max(revised_time) as revised_time FROM questions NATURAL JOIN last_revised
-    WHERE user_id=userId 
-    GROUP BY question_id, revised_time ORDER BY question_id
+    SELECT q.*, max(revised_time) as revised_time FROM questions q NATURAL JOIN last_revised
+    WHERE user_id=1 and solved=TRUE
+    GROUP BY question_id ORDER BY revised_time
   ) as q 
   WHERE DATE_PART('day', NOW() - revised_time) > 7;
 $$ LANGUAGE SQL;

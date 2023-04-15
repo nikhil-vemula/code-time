@@ -38,11 +38,11 @@ export default {
                   <th class="text-left">URL</th>
                   <th class="text-left">Difficulty</th>
                   <th class="text-left">Tags</th>
-                  <th class="text-left">Last solved</th>
+                  <!-- <th class="text-left">Last solved</th> -->
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in questions" :key="item.title">
+                <tr v-for="item in questions" :key="item.question_id">
                   <td>
                     <router-link :to="'/question/' + item.question_id">{{
                       item.title
@@ -61,7 +61,7 @@ export default {
                       size="x-small"
                       >{{ tag }}</v-chip>
                   </td>
-                  <td>1 day ago</td>
+                  <!-- <td>1 day ago</td> -->
                 </tr>
               </tbody>
             </v-table>

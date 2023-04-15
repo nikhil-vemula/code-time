@@ -40,6 +40,18 @@ export default {
         question_id: this.question.question_id,
       });
     },
+    markSolved() {
+      this.$store.dispatch("markQuestion", {
+        'question_id': this.question.question_id,
+        'solved': true
+      })
+    },
+    markUnsolved() {
+      this.$store.dispatch("markQuestion", {
+        'question_id': this.question.question_id,
+        'solved': false
+      })
+    }
   },
 };
 </script>
@@ -56,10 +68,18 @@ export default {
           <v-sheet min-height="80vh" rounded="lg" class="pa-md-4">
             <v-container>
               <v-row>
-                <v-col><h1>Question</h1></v-col>
+                <v-col>
+                  <h1>
+                    Question
+                    <v-btn @click="markSolved" size="x-small" variant="outlined" prepend-icon="mdi:mdi-check" color="success">Solved</v-btn>
+                    <v-btn class="ml-2" @click="markUnsolved" size="x-small" variant="outlined" prepend-icon="mdi:mdi-check" color="error">UN-Solved</v-btn>
+                  </h1>
+                  
+                </v-col>
                 <v-col>
                   <v-card-actions class="float-right">
                     <v-spacer></v-spacer>
+                    
                     <v-btn
                       @click="edit"
                       v-if="isReadOnly"

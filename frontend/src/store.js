@@ -7,12 +7,13 @@ axios.defaults.baseURL = "http://127.0.0.1:5000";
 const store = createStore({
   state() {
     return {
-      isLoggedIn: true,
+      isLoggedIn: false,
       loginFailed: false,
-      user: {
-        user_id: 1,
-      },
-      question: {}
+      user: null,
+      question: {},
+      reviseQuestions: [],
+      problemsCount: '',
+      solvedProblemsCount: ''
     };
   },
   mutations: {
@@ -30,6 +31,15 @@ const store = createStore({
     },
     setQuestion(state, payload) {
       state.question = payload
+    },
+    setReviseQuestions(state, payload) {
+      state.reviseQuestions = payload
+    },
+    setProblemsCount(state, payload) {
+      state.problemsCount = payload
+    },
+    setSolvedProblemsCount(state, payload) {
+      state.solvedProblemsCount = payload
     }
   },
   actions: {
@@ -110,6 +120,46 @@ const store = createStore({
           console.log(error);
         });
     },
+    markQuestion({state, commit}, parms) {
+      axios
+        .get("/marksolved/" + parms.question_id + '/' + parms.solved)
+        .then(function (response) {
+          console.log("Marked!")
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    fetchReviseQuestions({state, commit}) {
+      axios
+        .get("/questionsrevise/" + state.user.user_id)
+        .then(function (response) {
+          commit('setReviseQuestions', [...response.data])
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    fetchProblemsCount({state, commit}) {
+      axios
+        .get("/get_problems_count/" + state.user.user_id)
+        .then(function (response) {
+          commit('setProblemsCount', response.data.count)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    fetchSolvedProblemsCount({state, commit}) {
+      axios
+        .get("/get_solved_problems_count/" + state.user.user_id)
+        .then(function (response) {
+          commit('setSolvedProblemsCount', response.data.count)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   getters: {
     isLoggedIn(state) {
@@ -123,6 +173,15 @@ const store = createStore({
     },
     getQuestion(state) {
       return state.question;
+    },
+    getReviseQuestions(state) {
+      return state.reviseQuestions;
+    },
+    getProblemsCount(state) {
+      return state.problemsCount;
+    },
+    getSolvedProblemsCount(state) {
+      return state.solvedProblemsCount;
     },
   },
 });

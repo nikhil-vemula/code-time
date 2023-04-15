@@ -8,6 +8,22 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.$store.dispatch('fetchProblemsCount')
+    this.$store.dispatch('fetchSolvedProblemsCount')
+    this.$store.dispatch('fetchReviseQuestions')
+  },
+  computed: {
+    reviseQuestions() {
+      return this.$store.getters.getReviseQuestions
+    },
+    problemsCount() {
+      return this.$store.getters.getProblemsCount
+    },
+    solvedProblemsCount() {
+      return this.$store.getters.getSolvedProblemsCount
+    }
+  }
 };
 </script>
 
@@ -26,11 +42,11 @@ export default {
               <v-row dense align="center">
                 <v-card class="ma-4" width="45%">
                   <v-card-title><span class="font-weight-black">All questions</span></v-card-title>
-                  <v-card-text><span class="text-h4">200</span></v-card-text>
+                  <v-card-text><span class="text-h4">{{ problemsCount }}</span></v-card-text>
                 </v-card>
                 <v-card class="ma-4" width="45%">
                   <v-card-title><span class="font-weight-black">Solved questions</span></v-card-title>
-                  <v-card-text><span class="text-h4">50</span></v-card-text>
+                  <v-card-text><span class="text-h4">{{ solvedProblemsCount }}</span></v-card-text>
                 </v-card>
               </v-row>
             </v-container>
@@ -45,9 +61,9 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in 100" :key="item.title">
-                  <td>Question {{ item }}</td>
-                  <td>Question {{ item }} link</td>
+                <tr v-for="item in reviseQuestions" :key="item.question_id">
+                  <td><router-link :to="'/question/' + item.question_id">{{ item.title }}</router-link></td>
+                  <td><a :href="item.url">{{ item.url }} </a></td>
                 </tr>
               </tbody>
             </v-table>
