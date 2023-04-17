@@ -11,11 +11,11 @@ export default {
 
           return "E-mail is required.";
         },
-        // value => {
-        //   if (/.+@.+\..+/.test(value)) return true
+        value => {
+          if (/.+@.+\..+/.test(value)) return true
 
-        //   return 'E-mail must be valid.'
-        // },
+          return 'E-mail must be valid.'
+        },
       ],
       password: "",
       passwordRules: [
@@ -29,6 +29,10 @@ export default {
   },
   methods: {
     async submit(event) {
+      this.$refs.form.validate();
+      if (!this.isFormValid)
+        return;
+      
       this.$store.commit("setLoginFailed", false);
       this.$store.dispatch("userLogin", {
         email: this.email,
@@ -55,7 +59,7 @@ export default {
           text="Incorrect user or password"
           variant="tonal"
         ></v-alert>
-        <v-form @submit.prevent="submit" v-model="isFormValid">
+        <v-form ref="form" @submit.prevent="submit" v-model="isFormValid">
           <v-text-field
             v-model="email"
             :rules="emailRules"

@@ -1,0 +1,4 @@
+- alerts
+- signup
+- solved page
+- validations on question page

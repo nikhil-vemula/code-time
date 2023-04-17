@@ -71,6 +71,29 @@ const store = createStore({
       commit("setLoggedIn", false);
       router.push("/");
     },
+    createUser({ commit }, userDetails) {
+
+      axios
+        .post("/createuser", {
+          firstname: userDetails.first_name,
+          lastname: userDetails.last_name,
+          email: userDetails.email,
+          password: userDetails.password,
+        })
+        .then(function (response) {
+          let data = response.data;
+          console.log(response)
+          if (response.status != 200) {
+            return;
+          }
+          // commit('setUser', data[0])
+          // commit('setLoggedIn', true)
+          router.push('/signin')
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     getQuestionsForUser({ state, commit }) {
       axios
         .post("/questions", {
