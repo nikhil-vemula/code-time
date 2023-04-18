@@ -247,5 +247,5 @@ api.add_resource(SolvedProblemCount, '/get_solved_problems_count/<user_id>')
 api.add_resource(CreateUser, '/createuser')
 
 if __name__ == '__main__':
-    serve(app, host="0.0.0.0", port=8000)
+    serve(app, host="0.0.0.0", port=8000, threads=100)
     # app.run()
