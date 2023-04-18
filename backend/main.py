@@ -10,10 +10,10 @@ CORS(app)
 api = Api(app)
 
 conn = psycopg2.connect(
-    host = os.environ["CODE_TIME_DB_HOST"],
-    database = os.environ["CODE_TIME_DB_DATABSE"],
-    user = os.environ["CODE_TIME_DB_USERNAME"],
-    password = os.environ["CODE_TIME_DB_PASSWORD"]
+    host = os.getenv("CODE_TIME_DB_HOST"),
+    database = os.getenv("CODE_TIME_DB_DATABSE"),
+    user = os.getenv("CODE_TIME_DB_USERNAME"),
+    password = os.getenv("CODE_TIME_DB_PASSWORD")
 )
 
 
