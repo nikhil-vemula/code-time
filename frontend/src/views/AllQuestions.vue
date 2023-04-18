@@ -53,6 +53,7 @@ export default {
                   </td>
                   <td>{{ item.difficulty_level }}</td>
                   <td>
+                    <span v-if="item.tags != ''">
                     <v-chip
                       v-for="tag in item.tags.split(',')"
                       :key="tag"
@@ -60,6 +61,7 @@ export default {
                       label
                       size="x-small"
                       >{{ tag }}</v-chip>
+                    </span>
                   </td>
                   <!-- <td>1 day ago</td> -->
                 </tr>

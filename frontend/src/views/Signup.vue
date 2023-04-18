@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     submit() {
-      console.log("called", this.isFormValid);
       this.$refs.form.validate();
 
       if (!this.isFormValid) return;

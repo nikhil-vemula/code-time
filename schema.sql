@@ -115,7 +115,7 @@ description TEXT, difficulty_level TEXT, tags TEXT, notes TEXT, user_id INT, rev
 AS $$
   SELECT * from (
     SELECT q.*, max(revised_time) as revised_time FROM questions q NATURAL JOIN last_revised
-    WHERE user_id=1 and solved=TRUE
+    WHERE user_id=userId and solved=TRUE
     GROUP BY question_id ORDER BY revised_time
   ) as q 
   WHERE DATE_PART('day', NOW() - revised_time) > 7;

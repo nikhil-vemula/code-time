@@ -99,65 +99,110 @@ export default {
                 <v-row>
                   <v-col cols="12" lg="6">
                     <v-text-field
+                      v-if="!isReadOnly"
                       required
                       v-model="question.title"
                       label="Title"
                       :rules="rules"
                       dense
-                      single-line
-                    >
+                      single-line>
                     </v-text-field>
+                    <div v-else>
+                      <v-label>Title:</v-label> <br/>
+                      <p>{{ question.title }}</p>
+                    </div>
                   </v-col>
                   <v-col cols="12" lg="6">
                     <v-text-field
+                      v-if="!isReadOnly"
                       v-model="question.short_desc"
                       label="Short Description"
                     ></v-text-field>
+                    <div v-else>
+                      <v-label>Short Description:</v-label> <br/>
+                      <p>{{ question.short_desc }}</p>
+                    </div>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" lg="6">
                     <v-text-field
                       required
+                      v-if="!isReadOnly"
                       :rules="rules"
                       v-model="question.difficulty_level"
                       label="Difficulty"
                     ></v-text-field>
+                    <div v-else>
+                      <v-label>Difficulty:</v-label>
+                      <p>{{ question.difficulty_level }}</p>
+                    </div>
                   </v-col>
                   <v-col cols="12" lg="6">
                     <v-text-field
+                      v-if="!isReadOnly"
                       v-model="question.tags"
                       label="Tags"
                       placeholder="Comma seperated"
                     ></v-text-field>
+                    <div v-else>
+                      <v-label>Tags:</v-label>
+                      <span v-if="question.tags">
+                      <v-chip
+                        v-for="tag in question.tags.split(',')"
+                        :key="tag"
+                        class="mx-1"
+                        label
+                        size="small"
+                        >{{ tag }}</v-chip>
+                      </span>
+                    </div>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" lg="12">
+                    
                     <v-text-field
                       required
+                      v-if="!isReadOnly"
                       :rules="rules"
                       v-model="question.url"
                       label="URL"
                     ></v-text-field>
+                    <div v-else>
+                      <v-label>Link:</v-label> <br/>
+                      <a :href="question.url">{{ question.url }}</a>
+                    </div>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" lg="12">
                     <v-textarea
                       counter
+                      v-if="!isReadOnly"
                       v-model="question.description"
                       label="Description"
                     ></v-textarea>
+                    <div v-else>
+                      <v-label>Description:</v-label> <br/>
+                      <p v-if="question.description">{{ question.description }}</p>
+                      <p v-else>No description</p>
+                    </div>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" lg="12">
                     <v-textarea
+                      v-if="!isReadOnly"
                       counter
                       v-model="question.notes"
                       label="Notes"
                     ></v-textarea>
+                    <div v-else>
+                      <v-label>Notes:</v-label> <br/>
+                      <p v-if="question.description">{{ question.notes }}</p>
+                      <p v-else>No notes</p>
+                    </div>
                   </v-col>
                 </v-row>
               </v-container>

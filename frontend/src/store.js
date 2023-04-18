@@ -2,8 +2,8 @@ import { createStore } from "vuex";
 import router from "./router";
 import axios from "axios";
 
-// axios.defaults.baseURL = "http://127.0.0.1:5000";
-axios.defaults.baseURL = "https://code-time-backend.onrender.com";
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+// axios.defaults.baseURL = "https://code-time-backend.onrender.com";
 
 const store = createStore({
   state() {
@@ -23,6 +23,9 @@ const store = createStore({
     },
     setUser(state, payload) {
       state.user = payload;
+      if (localStorage) {
+        localStorage.setItem('user', JSON.stringify(state.user))
+      }
     },
     setLoginFailed(state, payload) {
       state.loginFailed = payload;
@@ -69,6 +72,7 @@ const store = createStore({
         });
     },
     userSignOut({ commit }) {
+      commit("setUser", null);
       commit("setLoggedIn", false);
       router.push("/");
     },
@@ -87,9 +91,9 @@ const store = createStore({
           if (response.status != 200) {
             return;
           }
-          // commit('setUser', data[0])
-          // commit('setLoggedIn', true)
-          router.push('/signin')
+          commit('setUser', data[0])
+          commit('setLoggedIn', true)
+          router.push('/')
         })
         .catch(function (error) {
           console.log(error);
