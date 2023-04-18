@@ -81,7 +81,7 @@ export default {
         </v-form>
         <div class="mt-2">
           <p class="text-body-2">
-            Don't have an account? <a href="/signup">Sign Up</a>
+            Don't have an account? <router-link to="/signup">Sign Up</router-link>
           </p>
         </div>
       </v-sheet>
