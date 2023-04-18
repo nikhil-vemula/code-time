@@ -3,15 +3,17 @@ from flask_restful import Resource, Api, reqparse
 import psycopg2
 import pandas as pd
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
 conn = psycopg2.connect(
-    host="localhost",
-    database="coding_made_easy",
-    password=""
+    host = os.environ["CODE_TIME_DB_HOST"],
+    database = os.environ["CODE_TIME_DB_DATABSE"],
+    user = os.environ["CODE_TIME_DB_USERNAME"],
+    password = os.environ["CODE_TIME_DB_PASSWORD"]
 )
 
 

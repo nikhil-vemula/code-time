@@ -125,8 +125,8 @@ $$ LANGUAGE SQL;
 
 -- Demo data
 INSERT INTO users (first_name, last_name, user_name, password) VALUES
-  ('Nikhil', 'Vemula', 'srvemu', '1234'),
-  ('Sohail', 'Mohammed', 'sohamoha', '3456');
+  ('Nikhil', 'Vemula', 'srvemu@iu.edu', '1234'),
+  ('Sohail', 'Mohammed', 'sohamoha@iu.edu', '3456');
 
 
 INSERT INTO last_logged_in (user_id, logged_time) VALUES
