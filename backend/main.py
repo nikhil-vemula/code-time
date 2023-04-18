@@ -11,18 +11,18 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-# conn = psycopg2.connect(
-#     host = os.getenv("CODE_TIME_DB_HOST"),
-#     database = os.getenv("CODE_TIME_DB_DATABSE"),
-#     user = os.getenv("CODE_TIME_DB_USERNAME"),
-#     password = os.getenv("CODE_TIME_DB_PASSWORD")
-# )
-
 conn = psycopg2.connect(
-    host = "localhost",
-    database = 'coding_made_easy',
-    password = ''
+    host = os.getenv("CODE_TIME_DB_HOST"),
+    database = os.getenv("CODE_TIME_DB_DATABSE"),
+    user = os.getenv("CODE_TIME_DB_USERNAME"),
+    password = os.getenv("CODE_TIME_DB_PASSWORD")
 )
+
+# conn = psycopg2.connect(
+#     host = "localhost",
+#     database = 'coding_made_easy',
+#     password = ''
+# )
 
 class Welcome(Resource):
     def get(self):
