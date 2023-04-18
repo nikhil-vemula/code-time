@@ -4,6 +4,8 @@ import psycopg2
 import pandas as pd
 from flask_cors import CORS
 import os
+from waitress import serve
+
 
 app = Flask(__name__)
 CORS(app)
@@ -16,6 +18,9 @@ conn = psycopg2.connect(
     password = os.getenv("CODE_TIME_DB_PASSWORD")
 )
 
+class Welcome(Resource):
+    def get(self):
+        return "Welcome! Server is running", 200
 
 class Users(Resource):
     def post(self):
@@ -179,6 +184,7 @@ class CreateUser(Resource):
         return make_response(jsonify(resp), 200)
 
 
+api.add_resource(Welcome, '/')
 api.add_resource(Users, '/users')
 api.add_resource(Questions, '/questions')
 api.add_resource(CreateQuestion, '/question')
@@ -190,4 +196,5 @@ api.add_resource(SolvedProblemCount, '/get_solved_problems_count/<user_id>')
 api.add_resource(CreateUser, '/createuser')
 
 if __name__ == '__main__':
-    app.run()
+    serve(app, host="0.0.0.0", port=8000)
+    # app.run()
