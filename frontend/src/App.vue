@@ -3,13 +3,16 @@ import AppNavigation from './components/AppNavigation.vue'
 
 export default {
   components: { AppNavigation },
-  mounted() {
+  beforeMount() {
     if (localStorage) {
       let user = localStorage.getItem('user')
       if (user != null) {
         user = JSON.parse(user)
         this.$store.commit('setUser', user)
         this.$store.commit('setLoggedIn', true)
+      } else {
+        this.$store.commit('setUser', null)
+        this.$store.commit('setLoggedIn', false)
       }
     }
   }

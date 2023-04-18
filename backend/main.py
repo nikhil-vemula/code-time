@@ -223,6 +223,7 @@ class CreateUser(Resource):
             curr.execute("SELECT * from users WHERE user_name=%s", (user_name, ))
             result = pd.DataFrame(curr.fetchall(), columns=[
                                 i[0] for i in curr.description])
+            result.drop('password', axis=1)
             resp = result.to_dict(orient='records')
             conn.commit()
             return make_response(jsonify(resp), 200)

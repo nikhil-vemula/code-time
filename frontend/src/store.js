@@ -24,7 +24,10 @@ const store = createStore({
     setUser(state, payload) {
       state.user = payload;
       if (localStorage) {
-        localStorage.setItem('user', JSON.stringify(state.user))
+        if (payload)
+          localStorage.setItem('user', JSON.stringify(state.user))
+        else
+          localStorage.removeItem('user')
       }
     },
     setLoginFailed(state, payload) {
