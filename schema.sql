@@ -136,11 +136,11 @@ INSERT INTO last_logged_in (user_id, logged_time) VALUES
   (2, '04/04/2023 02:00:00');
 
 INSERT INTO questions (title, url, short_desc, description, difficulty_level, tags, notes, user_id) VALUES 
-  ('Sample question 1', 'https://www.google.com', '', '', 'easy', 'tag1,tag2,tag3', '', 1),
-  ('Sample question 2', 'https://www.google.com', '', '', 'easy', 'tag1,tag2,tag3', '', 2),
-  ('Sample question 3', 'https://www.google.com', '', '', 'easy', 'tag1,tag2,tag3', '', 1),
-  ('Sample question 4', 'https://www.google.com', '', '', 'easy', 'tag1,tag2,tag3', '', 2),
-  ('Sample question 5', 'https://www.google.com', '', '', 'easy', 'tag1,tag2,tag3', '', 1);
+  ('Bulls and Cows', 'https://leetcode.com/problems/bulls-and-cows/', '', '', 'medium', 'Hash table, String, Counting', '', 1),
+  ('Number of Boomerangs', 'https://leetcode.com/problems/number-of-boomerangs/', '', '', 'medium', 'Array, Hash Table, Math', '', 2),
+  ('Two Sum', 'https://leetcode.com/problems/two-sum/', '', '', 'easy', 'Array, Hash Table', '', 1),
+  ('Valid Parentheses', 'https://leetcode.com/problems/valid-parentheses/', '', '', 'medium', 'String, Stack', '', 2),
+  ('Balanced Binary Tree', 'https://leetcode.com/problems/balanced-binary-tree/', '', '', 'easy', 'Tree, DFS', '', 1);
 
 INSERT INTO last_revised (question_id, solved, revised_time) VALUES
   (1, TRUE, '04/03/2023 12:00:00'),
