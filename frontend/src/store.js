@@ -2,8 +2,8 @@ import { createStore } from "vuex";
 import router from "./router";
 import axios from "axios";
 
-// axios.defaults.baseURL = "http://127.0.0.1:8000";
-axios.defaults.baseURL = "https://code-time-backend.onrender.com";
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+// axios.defaults.baseURL = "https://code-time-backend.onrender.com";
 
 const store = createStore({
   state() {
@@ -80,7 +80,6 @@ const store = createStore({
       router.push("/");
     },
     createUser({ commit }, userDetails) {
-
       axios
         .post("/createuser", {
           firstname: userDetails.first_name,
@@ -156,6 +155,7 @@ const store = createStore({
         .get("/marksolved/" + parms.question_id + '/' + parms.solved)
         .then(function (response) {
           console.log("Marked!")
+          alert("Successfully marked the question")
         })
         .catch(function (error) {
           console.log(error);
@@ -191,6 +191,12 @@ const store = createStore({
           console.log(error);
         });
     },
+    deleteQuestion({state,  commit}, parms) {
+      console.log(parms)
+      axios.delete('/question/' + parms['question_id']).then((response) => {
+        console.log(response)
+      })
+    }
   },
   getters: {
     isLoggedIn(state) {

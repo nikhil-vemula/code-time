@@ -52,7 +52,7 @@ CREATE TABLE last_revised (
   question_id INT,
   revised_time TIMESTAMP,
   solved BOOLEAN,
-  CONSTRAINT fk_question_id FOREIGN KEY(question_id) REFERENCES questions(question_id)
+  CONSTRAINT fk_question_id FOREIGN KEY(question_id) REFERENCES questions(question_id) ON DELETE CASCADE
 );
 
 -- Related resource
@@ -64,7 +64,7 @@ CREATE TABLE related_resource (
   question_id INT,
   url TEXT NOT NULL,
   type resource_type,
-  CONSTRAINT fk_question_id FOREIGN KEY(question_id) REFERENCES questions(question_id)
+  CONSTRAINT fk_question_id FOREIGN KEY(question_id) REFERENCES questions(question_id) ON DELETE CASCADE
 );
 
 -- Similar question
@@ -73,8 +73,8 @@ CREATE TABLE related_resource (
 CREATE TABLE similar_question(
   question_id INT,
   similar_question_id INT,
-  CONSTRAINT fk_question_id FOREIGN KEY(question_id) REFERENCES questions(question_id),
-  CONSTRAINT fk_similar_question_id FOREIGN KEY(similar_question_id) REFERENCES questions(question_id)
+  CONSTRAINT fk_question_id FOREIGN KEY(question_id) REFERENCES questions(question_id) ON DELETE CASCADE,
+  CONSTRAINT fk_similar_question_id FOREIGN KEY(similar_question_id) REFERENCES questions(question_id) ON DELETE CASCADE
 );
 
 -- Functions
@@ -125,8 +125,8 @@ $$ LANGUAGE SQL;
 
 -- Demo data
 INSERT INTO users (first_name, last_name, user_name, password) VALUES
-  ('Nikhil', 'Vemula', 'srvemu@iu.edu', '1234'),
-  ('Sohail', 'Mohammed', 'sohamoha@iu.edu', '3456');
+  ('Nikhil', 'Vemula', 'srvemu@iu.edu', 'admin'),
+  ('Sohail', 'Mohammed', 'sohamoha@iu.edu', 'admin');
 
 
 INSERT INTO last_logged_in (user_id, logged_time) VALUES

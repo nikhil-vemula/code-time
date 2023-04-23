@@ -40,6 +40,11 @@ export default {
         question_id: this.question.question_id,
       });
     },
+    deleteQuestion() {
+      this.$store.dispatch("deleteQuestion", {
+        'question_id': this.question.question_id
+      })
+    },
     markSolved() {
       this.$store.dispatch("markQuestion", {
         'question_id': this.question.question_id,
@@ -79,13 +84,22 @@ export default {
                 <v-col>
                   <v-card-actions class="float-right">
                     <v-spacer></v-spacer>
+                    <v-btn
+                      @click="deleteQuestion"
+                      color="error"
+                      variant="elevated"
+                      >Delete</v-btn>
                     
                     <v-btn
                       @click="edit"
                       v-if="isReadOnly"
+                      variant="elevated"
                       color="deep-purple-accent-4"
                       >Edit</v-btn
                     >
+
+                    
+                    
                     <v-btn @click="save" v-else color="deep-purple-accent-4"
                       >save</v-btn
                     >
